@@ -1,0 +1,104 @@
+<template>
+<div>
+  <Nav></Nav>
+  <form>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" placeholder="Enter email">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox"> Remember me</label>
+    </div>
+    <button class="btn btn-default" @click="get">조 회</button>
+    <button class="btn btn-default" @click="post">입 력</button>
+    <button class="btn btn-default" @click="put">수 정</button>
+    <button class="btn btn-default" @click="del">삭 제</button>
+    <br>
+    <label for="text">name:</label>
+      <input type="text" class="form-control" id="text" placeholder="Enter password" v-model="name">
+      <button class="btn btn-default" @click="postgo">postgo</button>
+  </form>
+  <Footer></Footer>
+</div>
+</template>
+
+<script>
+import Nav from '@/components/common/Nav.vue'
+import Footer from'@/components/common/Footer.vue'
+import axios from 'axios' 
+
+export default {
+  data(){
+    return{
+      context : 'http://localhost:9000',
+      id:'',
+      password:'',
+      name: ''
+    }    
+  },
+
+  components: {
+    Nav,
+    Footer
+  },
+  
+  methods :{ 
+      get (e) {
+        e.preventDefault();
+        axios.get(`${this.context}/customers/count`)
+          .then(res=>{
+            alert(`SUCCESS2 : ${res.data}`)
+          })
+          .catch(e=>{
+            alert('ERROR')
+          })
+      },
+      post(){
+        axios.post('/customers')
+          .then(d=>{
+            alert(`POST 연동성공 : ${d.data.result}`)
+          })
+      },
+      put(){
+        axios.put('/customers/id')
+          .then(d=>{
+            alert(`PUT 연동성공 : ${d.data.result}`)
+          })
+      },
+      del(){
+        axios.delete('/customers/id')
+          .then(d=>{
+            alert(`DEL 연동성공 : ${d.data.result}`)
+          })
+      }
+
+
+
+      // postgo(){
+      //   alert("asdf")
+      //   axios.post(`${this.context}/customers/insert`)      
+      //     .then(res=>{
+      //       alert("asdf");
+      //       alert("res : " + res.data);
+      //       alert(`내가한 insert성공 : ${res.data}`);
+      //     })
+      //     .catch(e=>{
+      //       alert('ERROR')
+      //     })
+      // }
+
+
+
+
+  }
+}
+
+
+</script>
+
+<style scoped>
+</style>
