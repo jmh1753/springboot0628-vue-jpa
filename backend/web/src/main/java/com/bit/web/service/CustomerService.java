@@ -15,62 +15,72 @@ import org.springframework.stereotype.Service;
 public class CustomerService {
     @Autowired CustomerRepository customerRepository;
 
-    //모든 엔티티의 개수
-    public Long count(){
+    public long	count(){
         return customerRepository.count();
     }
-
-    //식별키를 통한 삭제
-    public void delete(Customer customer){
-        customerRepository.delete(customer);
+    
+    public void	delete(Customer entity){
+        customerRepository.delete(entity);
     }
-
-    //주어진 모든 엔티티 삭제
-    public void delete(Iterable<Customer> it){
-        customerRepository.deleteAll(it);
-    }
-
-    //모든 엔티티 삭제
-    public void deleteAll(){
+    
+    public void	deleteAll(){
         customerRepository.deleteAll();
     }
-
-    //식별키를 가진 엔티티가 존재하는지 확인
-    public boolean exists(Long id){
+    
+    public void	deleteAll(Iterable<Customer> entities){
+        customerRepository.deleteAll(entities);
+    }
+    
+    public void	deleteById(Long id){
+        customerRepository.deleteById(id);
+    }
+    
+    public boolean	existsById(Long id){
         return customerRepository.existsById(id);
     }
-
-    //모든 엔티티 목록
-    public Iterable<Customer> findAll(){
+    
+    public Iterable<Customer>	findAll(){
         return customerRepository.findAll();
     }
-
-    //해당 식별키를 가진 엔티티 목록 반환
-    public Iterable<Customer> findAll(Iterable<Customer> it){
-        return findAll(it);
+    
+    public Iterable<Customer>	findAllById(Iterable<Long> ids){
+        return customerRepository.findAllById(ids);
     }
-
-    //해당 식별키에 해당하는 단일 엔티티 반환
-    public Optional<Customer> findById(Long id){
+    
+    public Optional<Customer>	findById(Long id){
         return customerRepository.findById(id);
     }
-
-    //해당 엔티티들의 등록과 수정
-    public Iterable<Customer> save(Iterable<Customer> it){
-        return customerRepository.saveAll(it);
+    
+    public Customer	save(Customer entity){
+        return customerRepository.save(entity);
+    }
+ 
+    public Iterable<Customer>	saveAll(Iterable<Customer> entities){
+        return customerRepository.saveAll(entities);
     }
 
-    //해당 엔티티의 등록과 수정
-    public Customer save(Customer customer){
-        return customerRepository.save(customer);
+    public Customer findByCustomerId(String id, String password){
+        System.out.println("사용자가 입력한id : " + id);
+        System.out.println("사용자가 입력한password : " + password);
+
+        Customer customer = customerRepository.findByCustomerId(id);
+        System.out.println("DB에서 조회 id: " + customer.getCustomerId());
+        System.out.println("DB에서 조회 pwd: " + customer.getPassword());
+        
+        return null;
     }
+ 
+
+  
+  
 
 
 
 
-    //추가
-    public Optional findByCustomerId(String customerId){
-        return customerRepository.findByCustomerId(customerId);
-    }
+
+    // //추가
+    // public Optional findByCustomerId(String customerId){
+    //     return customerRepository.findByCustomerId(customerId);
+    // }
     
 }

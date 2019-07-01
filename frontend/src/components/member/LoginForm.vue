@@ -4,23 +4,23 @@
   <form>
     <div class="form-group">
       <label for="email">Email:</label>
-      <input type="email" class="form-control" id="email" placeholder="Enter email">
+      <input type="text" class="form-control" id="email" placeholder="Enter email" v-model="customerId">
     </div>
     <div class="form-group">
       <label for="pwd">Password:</label>
-      <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+      <input type="text" class="form-control" id="pwd" placeholder="Enter password" v-model="password">
     </div>
     <div class="checkbox">
       <label><input type="checkbox"> Remember me</label>
     </div>
-    <button class="btn btn-default" @click="get">조 회</button>
-    <button class="btn btn-default" @click="post">입 력</button>
-    <button class="btn btn-default" @click="put">수 정</button>
-    <button class="btn btn-default" @click="del">삭 제</button>
-    <br>
-    <label for="text">name:</label>
-      <input type="text" class="form-control" id="text" placeholder="Enter password" v-model="name">
-      <button class="btn btn-default" @click="postgo">postgo</button>
+    <button class="btn btn-default" @click="count">count</button>
+    <button class="btn btn-default" @click="deleteById">deleteById</button>
+    <button class="btn btn-default" @click="existsById">existsById</button>
+    <button class="btn btn-default" @click="findAll">findAll</button>
+    <button class="btn btn-default" @click="findById">findById</button>
+    <button class="btn btn-default" @click="save">save</button>
+    <button class="btn btn-default" @click="login">login</button>
+
   </form>
   <Footer></Footer>
 </div>
@@ -34,10 +34,16 @@ import axios from 'axios'
 export default {
   data(){
     return{
-      context : 'http://localhost:9000',
-      id:'',
-      password:'',
-      name: ''
+      context : 'http://localhost:9000/customers',
+      customerId:'zzzz',
+      customerName : '길동',
+      password : '1234',
+      ssn : '931229-111111',
+      phone : '01055754786',
+      city: '서울 종로',
+      address : 'ymca',
+      postalcode : '123456',
+      photo : 'hong.jpg'
     }    
   },
 
@@ -47,9 +53,77 @@ export default {
   },
   
   methods :{ 
-      get (e) {
+      count (e) {
         e.preventDefault();
-        axios.get(`${this.context}/customers/count`)
+        axios.get(`${this.context}/count`)
+          .then(res=>{
+            alert(`count() SUCCESS : ${res.data}`)
+          })
+          .catch(e=>{
+            alert('ERROR')
+          })
+      },
+      deleteById (e) {
+        e.preventDefault();
+        axios.delete(`${this.context}/2`)
+          .then(res=>{
+            alert(`SUCCESS2 : ${res.data.result}`)
+          })
+          .catch(e=>{
+            alert('ERROR')
+          })
+      },
+      existsById (e) {
+        e.preventDefault();
+        axios.get(`${this.context}/exists/1`)
+          .then(res=>{
+            alert(`existsById (e) SUCCESS : ${res.data}`)
+          })
+          .catch(e=>{
+            alert('ERROR')
+          })
+      },
+      findAll (e) {
+        e.preventDefault();
+        axios.get(`${this.context}`)
+          .then(res=>{
+            alert(`SUCCESS2 : ${res.data[0].customerName}`)
+          })
+          .catch(e=>{
+            alert('ERROR')
+          })
+      },
+      findById (e) {
+        e.preventDefault();
+        axios.get(`${this.context}/1`)
+          .then(res=>{
+            alert(`findById() SUCCESS : ${res.data.customerName}`)
+          })
+          .catch(e=>{
+            alert('ERROR')
+          })
+      },
+      save (e) {
+        let data = {
+       
+          customerId: this.customerId,
+          customerName: this.customerName,
+          password : this.password,
+          ssn : this.ssn,
+          phone  : this.phone,
+          city: this.city,
+          address: this.address,
+          postalcode: this.postalcode,
+          photo: this.photo
+        }
+        let headers = {
+          'Content-Type': 'application/json',
+          'Authorization' : 'JWT fefege..'
+        }
+        e.preventDefault();
+        axios.post(`${this.context}`, 
+                  JSON.stringify(data),
+                  {headers: headers})
           .then(res=>{
             alert(`SUCCESS2 : ${res.data}`)
           })
@@ -57,42 +131,30 @@ export default {
             alert('ERROR')
           })
       },
-      post(){
-        axios.post('/customers')
-          .then(d=>{
-            alert(`POST 연동성공 : ${d.data.result}`)
+      login(e){   
+        e.preventDefault();    
+        alert("login버튼클릭")
+        let data = {        
+          customerId: this.customerId,
+          password: this.password          
+        }
+        let headers = {
+          'Content-Type': 'application/json',
+          'Authorization' : 'JWT fefege..'
+        }
+        alert(data.customerId)
+        axios.post(`${this.context}/login`,
+                  JSON.stringify(data),
+                  {headers: headers})
+          .then(res=>{
+            alert(`login() SUCCESS : ${res.data}`)
           })
-      },
-      put(){
-        axios.put('/customers/id')
-          .then(d=>{
-            alert(`PUT 연동성공 : ${d.data.result}`)
-          })
-      },
-      del(){
-        axios.delete('/customers/id')
-          .then(d=>{
-            alert(`DEL 연동성공 : ${d.data.result}`)
+          .catch(e=>{
+            alert('ERROR')
           })
       }
-
-
-
-      // postgo(){
-      //   alert("asdf")
-      //   axios.post(`${this.context}/customers/insert`)      
-      //     .then(res=>{
-      //       alert("asdf");
-      //       alert("res : " + res.data);
-      //       alert(`내가한 insert성공 : ${res.data}`);
-      //     })
-      //     .catch(e=>{
-      //       alert('ERROR')
-      //     })
-      // }
-
-
-
+      
+      
 
   }
 }
