@@ -59,15 +59,9 @@ public class CustomerService {
         return customerRepository.saveAll(entities);
     }
 
-    public Customer findByCustomerId(String id, String password){
-        System.out.println("사용자가 입력한id : " + id);
-        System.out.println("사용자가 입력한password : " + password);
-
-        Customer customer = customerRepository.findByCustomerId(id);
-        System.out.println("DB에서 조회 id: " + customer.getCustomerId());
-        System.out.println("DB에서 조회 pwd: " + customer.getPassword());
+    public Customer login(String id, String pw){
+        return customerRepository.findByCustomerIdAndPassword(id, pw);
         
-        return null;
     }
  
 

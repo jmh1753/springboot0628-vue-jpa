@@ -1,7 +1,5 @@
 package com.bit.web.common.lambda;
 
-
-
 /**
  * IConsumer
  */

@@ -7,9 +7,12 @@ import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
+import com.bit.web.common.lambda.IFunction;
+import com.bit.web.common.lambda.ISupplier;
 import com.bit.web.common.util.Printer;
 import com.bit.web.domain.CustomerDTO;
 import com.bit.web.entities.Customer;
+import com.bit.web.repositories.CustomerRepository;
 import com.bit.web.service.CustomerService;
 
 import org.modelmapper.ModelMapper;
@@ -35,6 +38,7 @@ public class CustomerController {
     @Autowired CustomerDTO customer;
     @Autowired Printer p;
     @Autowired ModelMapper modelMapper;
+    @Autowired CustomerRepository repo;
     
     @Bean
     public ModelMapper modelMapper(){
@@ -127,13 +131,17 @@ public class CustomerController {
     } */
     
     @PostMapping("/login")
-    public HashMap<String, String> login(@RequestBody CustomerDTO dto){
-        System.out.println("dto.customerId : " + dto.getCustomerId());
-        System.out.println("dto.password : " + dto.getPassword());
-        customerService.findByCustomerId(dto.getCustomerId(), dto.getPassword());
- 
-        HashMap<String, String> map = new HashMap<>();       
-        return map;
+    public CustomerDTO login(@RequestBody CustomerDTO dto){    
+        System.out.println("로그인 진입");
+        System.out.println("id : " + dto.getCustomerId());
+        System.out.println("password : " + dto.getPassword());
+        ISupplier fx = (()->{  
+                return repo.findByCustomerIdAndPassword(dto.getCustomerId(),
+                dto.getPassword());
+        });
+        
+        //return modelMapper.map(fx.get(), CustomerDTO.class);
+        return (CustomerDTO)fx.get();
     }
 
    

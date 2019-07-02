@@ -3,7 +3,7 @@
   <Nav></Nav>
   <form>
     <div class="form-group">
-      <label for="email">Email:</label>
+      <label for="email">ID:</label>
       <input type="text" class="form-control" id="email" placeholder="Enter email" v-model="customerId">
     </div>
     <div class="form-group">
@@ -131,29 +131,33 @@ export default {
             alert('ERROR')
           })
       },
-      login(e){   
-        e.preventDefault();    
+      login(e){
+        e.preventDefault();
         alert("login버튼클릭")
-        let data = {        
+        let data = {
           customerId: this.customerId,
-          password: this.password          
+          password: this.password
         }
         let headers = {
-          'Content-Type': 'application/json',
-          'Authorization' : 'JWT fefege..'
+        'Content-Type': 'application/json',
+        'Authorization' : 'JWT fefege..'
         }
         alert(data.customerId)
+        alert(data.password)
         axios.post(`${this.context}/login`,
-                  JSON.stringify(data),
-                  {headers: headers})
-          .then(res=>{
-            alert(`login() SUCCESS : ${res.data}`)
-          })
-          .catch(e=>{
-            alert('ERROR')
-          })
+                    JSON.stringify(data),
+                    {headers: headers})
+        .then(res=>{
+        alert(`login() SUCCESS : ${res.data}`)
+        })
+        .catch(e=>{
+        alert('ERROR')
+        })
       }
-      
+
+
+
+       
       
 
   }
