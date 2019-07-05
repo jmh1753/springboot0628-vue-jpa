@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import './App.css';
+import '../assets/css/App.css'
 // import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Hello from '../compo/Hello.js/index.js'
-import Navbar from '../compo/MyNavbar.js/index.js'
+import Hello from '../components/Hello'
+import MyNavbar from '../components/MyNavbar'
+import Login from '../containers/Login'
+import Join from '../containers/Join'
 
 class App extends Component{
   
@@ -13,9 +15,9 @@ class App extends Component{
   render(){
     return (  
       <div className='wrapper'> 
-      테스트
-        <Navbar></Navbar>  
-        <Hello name='홍길동'></Hello>    
+        <MyNavbar/>
+        <Login/>
+        <Join/>>
       </div>
     );
   }
