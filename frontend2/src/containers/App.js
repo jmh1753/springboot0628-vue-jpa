@@ -13,6 +13,7 @@ class App extends Component{
   render(){
     return (  
       <div className='wrapper'> 
+      테스트
         <Navbar></Navbar>  
         <Hello name='홍길동'></Hello>    
       </div>
