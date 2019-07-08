@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Figure, Table} from 'react-bootstrap'
-import profileimage from '../../src/assets/images/profileimage.png'
+import Profileimage from '../../assets/images/profileimage.png'
 
 class MyPage extends Component{
     constructor(props){
@@ -19,7 +19,7 @@ class MyPage extends Component{
                         width={171}
                         height={180}
                         alt="171x180"
-                        src= {profileimage}
+                        src= {Profileimage}
                     />
                     <Figure.Caption>
                         Nulla vitae elit libero, a pharetra augue mollis interdum.
@@ -30,7 +30,7 @@ class MyPage extends Component{
                     
                 <tbody>
                     <tr>
-                        <td rowSpan="2" colSpan="2"><img src="../../src/assets/images/profileimage.png"></img></td>                       
+                        <td rowSpan="2" colSpan="2"><img src={Profileimage}></img></td>                       
                         <td>ID</td>
                         <td>jmh1753</td>
                     </tr>
